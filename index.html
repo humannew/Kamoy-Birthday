@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy 23rd Birthday</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7, #fbc2eb, #a18cd1);
+      background-size: 300% 300%;
+      animation: gradientMove 10s infinite alternate;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: left top; }
+      100% { background-position: right bottom; }
+    }
+
+    .star {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkle 2s infinite ease-in-out;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.4); }
+    }
+
+    .container {
+      text-align: center;
+      color: #fff;
+      max-width: 700px;
+      padding: 20px;
+      border-radius: 20px;
+      background: rgba(255, 192, 203, 0.25);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    h1 {
+      font-size: 2.3rem;
+      margin-bottom: 15px;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    }
+    p { font-size: 1.1rem; line-height: 1.7; }
+
+    .password-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+    .password-screen input {
+      padding: 15px 20px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      outline: none;
+      text-align: center;
+      width: 220px;
+    }
+    .password-screen button {
+      background: #ff5c8a;
+      border: none;
+      color: #fff;
+      padding: 12px 25px;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s;
+    }
+    .password-screen button:hover {
+      background: #ff2e63;
+      transform: scale(1.05);
+    }
+    .error {
+      color: #ffd6e0;
+      font-size: 1rem;
+    }
+
+    .gift-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      max-width: 95%;
+    }
+
+    .gift {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      cursor: pointer;
+      animation: bounce 1s infinite;
+    }
+    .box {
+      width: 120px;
+      height: 80px;
+      background: #ff8fab;
+      position: absolute;
+      bottom: 0;
+      border-radius: 8px;
+    }
+    .lid {
+      width: 130px;
+      height: 35px;
+      background: #ff5c8a;
+      position: absolute;
+      top: -8px;
+      left: -5px;
+      border-radius: 8px 8px 0 0;
+      transition: transform 1s ease;
+    }
+    .ribbon {
+      width: 16px;
+      height: 120px;
+      background: #fff;
+      position: absolute;
+      left: 52px;
+      top: -8px;
+      animation: ribbonWave 2s infinite ease-in-out;
+      transform-origin: center top;
+    }
+    @keyframes ribbonWave {
+      0%,100% { transform: rotate(0deg); }
+      50% { transform: rotate(6deg); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .open .lid {
+      transform: rotate(-30deg) translateY(-40px);
+    }
+
+    .music {
+      opacity: 0;
+      transition: opacity 1.5s ease;
+      text-align: center;
+      width: 100%;
+    }
+    .show { opacity: 1; }
+
+    iframe {
+      max-width: 100%;
+      border-radius: 12px;
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 15px;
+      background-color: pink;
+      top: -20px;
+      opacity: 0.9;
+      animation: fall 3s linear forwards;
+    }
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(100vh) rotate(360deg); }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.7rem; }
+      p { font-size: 1rem; }
+      .gift { width: 100px; height: 100px; }
+      .box { width: 100px; height: 70px; }
+      .lid { width: 110px; height: 30px; }
+      .ribbon { height: 100px; left: 44px; }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    for (let i = 0; i < 40; i++) {
+      const star = document.createElement("div");
+      star.classList.add("star");
+      star.style.top = Math.random() * window.innerHeight + "px";
+      star.style.left = Math.random() * window.innerWidth + "px";
+      star.style.animationDuration = (1.5 + Math.random() * 2) + "s";
+      document.body.appendChild(star);
+    }
+  </script>
+
+  <div class="container" id="content">
+    <div class="password-screen" id="passwordScreen">
+      <h1>🎉 Clue: Your Birthday (dd-mm-yyyy)</h1>
+      <input type="password" id="passwordInput" placeholder="Masukkan password...">
+      <button onclick="checkPassword()">Masuk</button>
+      <div class="error" id="errorMsg"></div>
+    </div>
+  </div>
+
+  <script>
+    const content = document.getElementById('content');
+    const errorMsg = document.getElementById('errorMsg');
+    const correctPassword = "05092002"; // bisa diubah
+    let step = 0;
+
+    function checkPassword() {
+      const input = document.getElementById('passwordInput').value;
+      if (input === correctPassword) {
+        showUcapan();
+      } else {
+        errorMsg.textContent = "❌ Password salah, coba lagi!";
+      }
+    }
+
+    function showUcapan() {
+      step = 0;
+      content.innerHTML = `
+        <h1>HAPPY BIRTHDAY, PRETTY GIRL 🎉</h1>
+        <p>Di hari bahagia ini semoga cuma ada cinta dan kebahagiaan yang kakak dapetin. Jangan lupa apresiasi diri sendiri dan rayain walau dengan hal kecil! 💖</p>
+      `;
+      // listener dipasang setelah teks muncul
+      setTimeout(() => {
+        content.onclick = handleSteps;
+      }, 300);
+    }
+
+    function handleSteps() {
+      step++;
+      if (step === 1) {
+        content.innerHTML = `
+          <h1>Semoga Sukses! 🎂</h1>
+          <p>Semoga di usia kakak yang ke-23 ini, semoga kakak selalu dipertemukan dengan orang-orang baik dan harus tetep jadi orang baik ya kak! Semoga semua mimpi kakak bisa tercapai satu persatu, semoga kakak dan keluarga terus diberikan kesehatan, semoga hidup kakak setiap hari dipenuhi rezeki berlimpah dan semua urusan kakak diberi kelancaran sama Allah, aamiin.
+            Terima kasih sudah jadi orang baik, terima kasih udah berhasil lewatin berjuta juta waktu yang berat sampai bisa ada di titik ini. HEBAT BANGET! PROUD OF YOU!
+            Thank you so much kakak udah mau jadi temen aku, mau selalu dengerin ceritaku dan kasih saran-saran terbaik! Semoga pertemanan kita awet sampe nanti bisa ketemu. Luv yu kakak cantik.🌸</p>
+        `;
+      } else if (step === 2) {
+        content.onclick = null;
+        content.innerHTML = `
+          <h1>Hadiah Spesial hehe 🎁</h1>
+          <div class="gift-wrapper">
+            <p>Klik kotak kado di bawah ini...</p>
+            <div class="gift" id="gift">
+              <div class="lid"></div>
+              <div class="box"></div>
+              <div class="ribbon"></div>
+            </div>
+            <div class="music" id="music">
+              <h2>✨ For You ✨</h2>
+              <iframe width="300" height="170"
+              src="https://www.youtube.com/embed/wSm9PIIQhiI"
+              title="Happy Birthday Song"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+              <p style="margin-top:10px; font-size:0.9rem;">(klik layar untuk kembali ke ucapan awal 🔄)</p>
+            </div>
+          </div>
+        `;
+
+        const gift = document.getElementById('gift');
+        const music = document.getElementById('music');
+
+        gift.addEventListener('click', () => {
+          gift.classList.add('open');
+          setTimeout(() => {
+            music.classList.add('show');
+            launchConfetti();
+            // klik layar balik ke ucapan awal
+            content.onclick = showUcapan;
+          }, 1200);
+        });
+      }
+    }
+
+    function launchConfetti() {
+      for (let i = 0; i < 80; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        document.body.appendChild(confetti);
+
+        confetti.style.left = Math.random() * window.innerWidth + 'px';
+        confetti.style.backgroundColor = getRandomColor();
+        confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
+        confetti.style.opacity = Math.random();
+
+        setTimeout(() => { confetti.remove(); }, 4000);
+      }
+    }
+
+    function getRandomColor() {
+      const colors = ['#ff5c8a', '#ff8fab', '#ffb6c1', '#ffc1cc', '#ffe4e1', '#ff69b4'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+  </script>
+</body>
+</html>
